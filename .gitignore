@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.db
+*.duckdb
+*.duckdb.wal
+benchmark_results.json
+.env
