@@ -1,0 +1,16 @@
+{
+  "type": "record",
+  "name": "BookingCancelledEvent",
+  "namespace": "campus.resource.events",
+  "doc": "Emitted when a resource booking is cancelled",
+  "fields": [
+    {"name": "event_id", "type": "string"},
+    {"name": "event_type", "type": "string", "default": "BookingCancelled"},
+    {"name": "correlation_id", "type": "string"},
+    {"name": "timestamp", "type": "string"},
+    {"name": "booking_id", "type": "string"},
+    {"name": "resource_id", "type": "string"},
+    {"name": "user_id", "type": "string"},
+    {"name": "reason", "type": "string", "default": "User cancelled"}
+  ]
+}

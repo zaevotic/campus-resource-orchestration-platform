@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "AuditEvent",
+  "namespace": "campus.resource.events",
+  "doc": "Immutable audit record capturing security and domain actions",
+  "fields": [
+    {"name": "audit_id", "type": "string"},
+    {"name": "correlation_id", "type": "string"},
+    {"name": "timestamp", "type": "string"},
+    {"name": "actor_id", "type": "string"},
+    {"name": "actor_role", "type": "string"},
+    {"name": "action", "type": "string"},
+    {"name": "resource_id", "type": "string"},
+    {"name": "status", "type": "string"},
+    {"name": "details_json", "type": "string", "default": "{}"}
+  ]
+}

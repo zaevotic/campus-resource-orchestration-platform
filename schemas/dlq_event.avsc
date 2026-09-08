@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "DeadLetterEvent",
+  "namespace": "campus.resource.events",
+  "doc": "Recorded when an event consumption fails after retry exhaustion",
+  "fields": [
+    {"name": "dlq_id", "type": "string"},
+    {"name": "correlation_id", "type": "string"},
+    {"name": "original_topic", "type": "string"},
+    {"name": "consumer_group", "type": "string"},
+    {"name": "error_message", "type": "string"},
+    {"name": "stack_trace", "type": "string"},
+    {"name": "retry_count", "type": "int"},
+    {"name": "failed_at", "type": "string"},
+    {"name": "payload_json", "type": "string"}
+  ]
+}

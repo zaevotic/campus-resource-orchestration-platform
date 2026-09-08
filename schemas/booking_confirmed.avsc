@@ -1,0 +1,21 @@
+{
+  "type": "record",
+  "name": "BookingConfirmedEvent",
+  "namespace": "campus.resource.events",
+  "doc": "Emitted when a resource booking is successfully created and committed under exclusion constraint",
+  "fields": [
+    {"name": "event_id", "type": "string"},
+    {"name": "event_type", "type": "string", "default": "BookingConfirmed"},
+    {"name": "correlation_id", "type": "string"},
+    {"name": "timestamp", "type": "string"},
+    {"name": "booking_id", "type": "string"},
+    {"name": "resource_id", "type": "string"},
+    {"name": "user_id", "type": "string"},
+    {"name": "user_role", "type": "string"},
+    {"name": "department", "type": "string"},
+    {"name": "start_time", "type": "string"},
+    {"name": "end_time", "type": "string"},
+    {"name": "purpose", "type": "string"},
+    {"name": "attendees_count", "type": "int", "default": 1}
+  ]
+}
