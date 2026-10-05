@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campus Orchestrator — Group 11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Light Theme — Warm Putty Newsprint & Deep Ink (Slides 1, 3, 5, 7, 9, 11, 13, 15) */
+  --bg:#dcdcd9;
+  --surface:#e3e3e0;
+  --surface-2:#d1d1cd;
+  --text:#161616;
+  --muted:#52524e;
+  --border:#161616;
+  --rule:rgba(22,22,22,0.26);
+  --brand:#161616;
+  --brand-2:#3a3a38;
+  --brand-soft:rgba(22,22,22,0.08);
+  --ok:#161616;
+  --ok-soft:rgba(22,22,22,0.09);
+  --warn:#4a3f28;
+  --warn-soft:rgba(74,63,40,0.12);
+  --bad:#7a1c1c;
+  --bad-soft:rgba(122,28,28,0.12);
+  --info:#161616;
+  --info-soft:rgba(22,22,22,0.08);
+  --side:#191919;
+  --side-2:#242424;
+  --side-text:#b8b8b4;
+  --inv-bg:#161616;
+  --inv-text:#e3e3e0;
+  --shadow:none;
+  --radius:0px;
+  --serif:'Instrument Serif', 'Playfair Display', Georgia, serif;
+  --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+}
+[data-theme="dark"]{
+  /* Dark Theme — Matte Obsidian Charcoal & Bone Putty (Slides 2, 4, 6, 8, 10, 12, 14) */
+  --bg:#1b1b1b;
+  --surface:#212121;
+  --surface-2:#151515;
+  --text:#e0e0dc;
+  --muted:#94948e;
+  --border:#e0e0dc;
+  --rule:rgba(224,224,220,0.24);
+  --brand:#e0e0dc;
+  --brand-2:#b8b8b2;
+  --brand-soft:rgba(224,224,220,0.1);
+  --ok:#e0e0dc;
+  --ok-soft:rgba(224,224,220,0.12);
+  --warn:#d4b475;
+  --warn-soft:rgba(212,180,117,0.14);
+  --bad:#e07a7a;
+  --bad-soft:rgba(224,122,122,0.15);
+  --info:#e0e0dc;
+  --info-soft:rgba(224,224,220,0.1);
+  --side:#131313;
+  --side-2:#1f1f1f;
+  --side-text:#9e9e98;
+  --inv-bg:#e0e0dc;
+  --inv-text:#161616;
+  --shadow:none;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--text);
+  font-size:13.5px;
+  line-height:1.45;
+  letter-spacing:-0.01em;
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select,textarea{font:inherit;color:inherit;border-radius:0}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;letter-spacing:0}
+.hidden{display:none!important}
+em, i.serif{font-family:var(--serif);font-style:italic;font-weight:400}
+
+/* ---------- login (Editorial Poster Split — Slides 1, 2, 3) ---------- */
+#login{min-height:100vh;display:grid;grid-template-columns:1.25fr 1fr;border-bottom:2px solid var(--border)}
+.login-hero{
+  background:#191919;
+  color:#e0e0dc;
+  padding:52px 60px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  position:relative;
+  border-right:2px solid var(--border);
+}
+.login-kicker{
+  font-family:var(--serif);
+  font-size:26px;
+  color:#8c8c86;
+  letter-spacing:-0.02em;
+  font-weight:400;
+}
+.login-kicker em{font-style:italic;color:#b8b8b2}
+.hero-title{
+  font-family:var(--serif);
+  font-size:clamp(62px, 6.2vw, 96px);
+  line-height:0.94;
+  font-weight:400;
+  letter-spacing:-0.035em;
+  color:#e4e4e0;
+  margin:18px 0 28px;
+}
+.hero-title span, .hero-title em{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:400;
+  color:#ffffff;
+}
+.hero-manifesto{
+  border-left:1.5px solid #e0e0dc;
+  padding-left:16px;
+  max-width:520px;
+  font-size:11.5px;
+  line-height:1.55;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  color:#c8c8c2;
+}
+.hero-manifesto p + p{margin-top:12px}
+.hero-equation{
+  font-family:var(--serif);
+  font-size:30px;
+  letter-spacing:-0.02em;
+  color:#e0e0dc;
+  margin-top:26px;
+}
+.hero-foot{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:20px;
+  padding-top:24px;
+  border-top:1px solid rgba(224,224,220,0.2);
+  font-size:10.5px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:#a8a8a2;
+}
+.hero-tags{display:flex;gap:6px;flex-wrap:wrap}
+.hero-tags span{
+  border:1px solid rgba(224,224,220,0.45);
+  padding:4px 10px;
+  font-size:10px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:#e0e0dc;
+}
+.login-form-wrap{display:grid;place-items:center;padding:44px;background:var(--bg)}
+.login-card{
+  width:100%;
+  max-width:420px;
+  border:2px solid var(--border);
+  background:var(--surface);
+  padding:34px 32px;
+}
+.login-card h2{
+  font-family:var(--serif);
+  font-size:48px;
+  font-weight:400;
+  line-height:0.98;
+  letter-spacing:-0.03em;
+}
+.login-card p.sub{
+  color:var(--muted);
+  margin:10px 0 22px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  border-left:1.5px solid var(--border);
+  padding-left:10px;
+}
+.demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px}
+.demo{
+  background:var(--bg);
+  border:1.5px solid var(--border);
+  padding:10px 12px;
+  text-align:left;
+  cursor:pointer;
+  transition:background .12s, color .12s;
+}
+.demo:hover{background:var(--inv-bg);color:var(--inv-text)}
+.demo:hover small{color:var(--inv-text);opacity:0.8}
+.demo b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;font-weight:700}
+.demo small{color:var(--muted);font-size:11px;font-family:var(--serif);font-style:italic;font-size:14px}
+
+/* ---------- form controls ---------- */
+label.f{
+  display:block;
+  font-size:10.5px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.inp,select.inp,textarea.inp{
+  width:100%;
+  background:var(--bg);
+  border:1.5px solid var(--border);
+  padding:10px 12px;
+  outline:none;
+  font-size:13px;
+  transition:background .12s;
+}
+.inp:focus{background:var(--surface)}
+textarea.inp{resize:vertical;min-height:76px}
+.field{margin-bottom:15px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{
+  border:1.5px solid var(--border);
+  padding:9px 16px;
+  font-weight:700;
+  font-size:11.5px;
+  text-transform:uppercase;
+  letter-spacing:0.07em;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  justify-content:center;
+  transition:background .12s, color .12s;
+  background:var(--surface);
+  color:var(--text);
+}
+.btn:hover{background:var(--inv-bg);color:var(--inv-text)}
+.btn.primary{
+  background:var(--inv-bg);
+  color:var(--inv-text);
+  border:1.5px solid var(--border);
+}
+.btn.primary:hover{
+  background:var(--surface);
+  color:var(--text);
+}
+.btn.danger{color:var(--bad);border-color:var(--bad)}
+.btn.danger:hover{background:var(--bad);color:#fff}
+.btn.sm{padding:6px 11px;font-size:10.5px}
+.btn.block{width:100%}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* ---------- shell ---------- */
+#app{display:grid;grid-template-columns:255px 1fr;min-height:100vh}
+aside{
+  background:var(--side);
+  color:var(--side-text);
+  padding:26px 18px 20px;
+  display:flex;
+  flex-direction:column;
+  position:sticky;
+  top:0;
+  height:100vh;
+  border-right:2px solid var(--border);
+}
+aside .logo{
+  color:#e4e4e0;
+  padding:0 6px 22px;
+  border-bottom:1px solid rgba(228,228,224,0.18);
+  margin-bottom:10px;
+  display:block;
+}
+aside .logo .serif-brand{
+  font-family:var(--serif);
+  font-size:31px;
+  line-height:0.95;
+  letter-spacing:-0.03em;
+  font-weight:400;
+  display:block;
+}
+aside .logo .sub-brand{
+  font-size:9.5px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:#888882;
+  margin-top:6px;
+  display:block;
+}
+nav{display:flex;flex-direction:column;gap:2px;flex:1}
+nav .sec{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:17px;
+  letter-spacing:-0.01em;
+  color:#8a8a84;
+  padding:16px 8px 4px;
+  font-weight:400;
+}
+nav a{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:9px 10px;
+  color:var(--side-text);
+  text-decoration:none;
+  font-weight:600;
+  font-size:11.5px;
+  text-transform:uppercase;
+  letter-spacing:0.07em;
+  cursor:pointer;
+  transition:.12s;
+  border-left:2px solid transparent;
+}
+nav a svg{width:15px;height:15px;flex:none;opacity:.8}
+nav a:hover{color:#fff;background:var(--side-2)}
+nav a.active{
+  background:#e4e4e0;
+  color:#141414;
+  border-left:2px solid #fff;
+}
+.side-foot{
+  border:1.5px solid rgba(228,228,224,0.35);
+  background:var(--side-2);
+  padding:11px 12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.avatar{
+  width:32px;
+  height:32px;
+  border:1.5px solid #e4e4e0;
+  background:#141414;
+  display:grid;
+  place-items:center;
+  color:#e4e4e0;
+  font-family:var(--serif);
+  font-size:19px;
+  flex:none;
+}
+.side-foot b{color:#e4e4e0;display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:0.05em}
+.side-foot small{font-size:10px;color:#8e8e88;text-transform:uppercase;letter-spacing:0.06em}
+.side-foot button{margin-left:auto;background:none;border:0;color:#9e9e98;cursor:pointer;padding:5px}
+.side-foot button:hover{color:#fff}
+
+main{padding:34px 44px 72px;min-width:0}
+.topbar{
+  display:flex;
+  align-items:flex-end;
+  gap:18px;
+  margin-bottom:32px;
+  padding-bottom:20px;
+  border-bottom:2px solid var(--border);
+  flex-wrap:wrap;
+}
+.topbar h1{
+  font-family:var(--serif);
+  font-size:clamp(48px, 5vw, 72px);
+  font-weight:400;
+  line-height:0.92;
+  letter-spacing:-0.035em;
+}
+.topbar p{
+  color:var(--muted);
+  font-size:11.5px;
+  text-transform:uppercase;
+  letter-spacing:0.07em;
+  margin-top:10px;
+  border-left:1.5px solid var(--border);
+  padding-left:10px;
+}
+.topbar .sp{flex:1}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 13px;
+  font-size:10.5px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  background:var(--surface);
+  border:1.5px solid var(--border);
+}
+.dot{width:7px;height:7px;background:var(--text);display:inline-block}
+.dot.bad{background:var(--bad)}
+.icon-btn{
+  width:36px;
+  height:36px;
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  font-size:14px;
+}
+.icon-btn:hover{background:var(--inv-bg);color:var(--inv-text)}
+
+/* ---------- cards & grids (Slides 7–10 Stark Framed Boxes) ---------- */
+.card{
+  background:var(--surface);
+  border:2px solid var(--border);
+  padding:22px 24px;
+  position:relative;
+}
+.card h3{
+  font-family:var(--serif);
+  font-size:28px;
+  font-weight:400;
+  line-height:1.05;
+  letter-spacing:-0.025em;
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+}
+.card h3 svg{width:17px;height:17px;align-self:center}
+.card h3 small{
+  font-family:var(--sans);
+  font-weight:600;
+  color:var(--muted);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  margin-left:auto;
+}
+.card .hd{
+  margin-bottom:18px;
+  padding-bottom:10px;
+  border-bottom:1px solid var(--rule);
+}
+.grid{display:grid;gap:20px}
+.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+.g-21{grid-template-columns:1.85fr 1fr}.g-12{grid-template-columns:1fr 1.85fr}
+.mt{margin-top:22px}
+
+/* KPI Specimen Blocks (Slide 3 "6 Billion photos..." style) */
+.kpi{display:flex;flex-direction:column;justify-content:space-between}
+.kpi .lbl{
+  color:var(--muted);
+  font-size:10.5px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.09em;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+.kpi .val{
+  font-family:var(--serif);
+  font-size:54px;
+  font-weight:400;
+  letter-spacing:-0.035em;
+  margin-top:6px;
+  line-height:0.95;
+}
+.kpi .val small{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:24px;
+  color:var(--muted);
+  font-weight:400;
+  margin-left:4px;
+}
+.kpi .sub{
+  font-size:10.5px;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  color:var(--muted);
+  margin-top:12px;
+  border-left:1.5px solid var(--border);
+  padding-left:8px;
+}
+.kpi .ico{width:24px;height:24px;display:grid;place-items:center;border:1px solid var(--border)}
+.kpi .ico svg{width:13px;height:13px}
+.c-brand,.c-ok,.c-info{background:var(--brand-soft);color:var(--text)}
+.c-warn{background:var(--warn-soft);color:var(--warn)}
+.c-bad{background:var(--bad-soft);color:var(--bad)}
+
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  font-size:10px;
+  font-weight:700;
+  padding:2px 8px;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  border:1px solid currentColor;
+}
+.chip{
+  display:inline-block;
+  background:var(--bg);
+  border:1px solid var(--border);
+  font-size:10.5px;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  padding:3px 8px;
+  margin:0 5px 5px 0;
+  color:var(--muted);
+}
+.chip b{color:var(--text);font-weight:700}
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:42px 12px;
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:22px;
+}
+.empty svg{width:30px;height:30px;opacity:.55;margin-bottom:8px}
+
+/* ---------- pipeline ("evidence -> interpretation -> concept" Slide 5 motif) ---------- */
+.pipe{display:flex;align-items:stretch;gap:0;overflow-x:auto;padding:4px 0}
+.node{
+  flex:1;
+  min-width:135px;
+  background:var(--bg);
+  border:1.5px solid var(--border);
+  padding:16px 14px;
+  text-align:left;
+  position:relative;
+}
+.node .n{
+  font-family:var(--serif);
+  font-size:42px;
+  line-height:0.95;
+  font-weight:400;
+  letter-spacing:-0.03em;
+}
+.node .t{
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:0.07em;
+  margin-top:8px;
+}
+.node .d{
+  font-size:10px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  margin-top:3px;
+}
+.link{width:36px;flex:none;display:grid;place-items:center;color:var(--text)}
+.link svg{width:20px;height:20px}
+.svc{
+  border-left:1.5px solid var(--border);
+  padding:6px 0 6px 12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.svc b{font-size:11.5px;display:block;text-transform:uppercase;letter-spacing:0.06em;font-weight:700}
+.svc small{color:var(--muted);font-size:10.5px;font-family:'JetBrains Mono',monospace}
+
+/* ---------- resource cards (Slides 7–10 Framed Study Cards) ---------- */
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:20px}
+.res{padding:0;display:flex;flex-direction:column;transition:transform .15s}
+.res:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--border)}
+.res .banner{
+  padding:12px 18px;
+  border-bottom:1.5px solid var(--border);
+  background:var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.res .banner .big{width:20px;height:20px;color:var(--text);opacity:0.85}
+.res .banner .tag{border:1px solid var(--border);background:var(--inv-bg);color:var(--inv-text)}
+.res .body{padding:18px 20px 20px;flex:1;display:flex;flex-direction:column}
+.res h4{
+  font-family:var(--serif);
+  font-size:30px;
+  font-weight:400;
+  line-height:1.0;
+  letter-spacing:-0.025em;
+}
+.res .loc{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.07em;
+  margin:8px 0 14px;
+  border-left:1.5px solid var(--border);
+  padding-left:8px;
+}
+.res .foot{
+  margin-top:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding-top:16px;
+  border-top:1px solid var(--rule);
+}
+.cap{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-weight:700;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.07em;
+}
+.cap svg{width:15px;height:15px;color:var(--text)}
+
+/* ---------- table (Slide 11 "Categorisation results" Grid Table) ---------- */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--text);
+  text-align:left;
+  padding:12px 14px;
+  font-weight:800;
+  border-bottom:1.5px solid var(--border);
+  border-right:1px solid var(--rule);
+  white-space:nowrap;
+}
+th:last-child{border-right:0}
+td{
+  padding:13px 14px;
+  border-bottom:1px solid var(--rule);
+  border-right:1px solid var(--rule);
+  vertical-align:top;
+  font-size:12.5px;
+}
+td:last-child{border-right:0}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--bg)}
+.s-CONFIRMED,.s-DELIVERED,.s-SUCCESS,.s-RESOLVED,.s-LOW{background:var(--ok-soft);color:var(--text)}
+.s-CANCELLED,.s-REJECTED,.s-FAILED,.s-CRITICAL{background:var(--bad-soft);color:var(--bad)}
+.s-OPEN,.s-HIGH{background:var(--warn-soft);color:var(--warn)}
+.s-IN_PROGRESS,.s-MEDIUM,.s-CLOSED{background:var(--info-soft);color:var(--text)}
+
+/* ---------- charts (Slide 6 "What we found" Monochrome Editorial Bars) ---------- */
+.bars{display:flex;flex-direction:column;gap:14px}
+.bar-row .top{
+  display:flex;
+  justify-content:space-between;
+  font-size:11.5px;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  margin-bottom:6px;
+  font-weight:700;
+}
+.bar-row .top span:last-child{color:var(--muted);font-family:'JetBrains Mono',monospace;font-weight:500}
+.track{height:12px;background:var(--bg);border:1px solid var(--border);overflow:hidden}
+.fill{height:100%;background:var(--text);transition:width .7s cubic-bezier(.2,.8,.2,1);width:0}
+.cols{
+  display:flex;
+  align-items:flex-end;
+  gap:14px;
+  height:210px;
+  padding:18px 8px 6px;
+  border-bottom:1.5px solid var(--border);
+  background-image:linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+  background-size:100% 25%;
+}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:6px;min-width:0}
+.col .b{
+  width:100%;
+  max-width:56px;
+  background:var(--text);
+  border:1px solid var(--border);
+  transition:height .7s cubic-bezier(.2,.8,.2,1);
+  height:0;
+}
+.col .v{font-family:var(--serif);font-size:16px;line-height:1}
+.col .x{font-family:var(--serif);font-size:13px;color:var(--muted)}
+.donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.legend{display:flex;flex-direction:column;gap:9px;flex:1;min-width:140px}
+.legend div{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:11.5px;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  font-weight:600;
+  border-bottom:1px solid var(--rule);
+  padding-bottom:5px;
+}
+.legend i{width:10px;height:10px;border:1px solid var(--border);flex:none}
+.legend b{margin-left:auto;font-family:'JetBrains Mono',monospace}
+
+/* ---------- feed (Slides 12 & 14 Vertical-Ruled Literature Blocks) ---------- */
+.feed{display:flex;flex-direction:column;gap:14px}
+.note{
+  display:flex;
+  gap:14px;
+  padding:14px 16px;
+  border:1.5px solid var(--border);
+  border-left:4px solid var(--border);
+  background:var(--bg);
+}
+.note .ic{width:32px;height:32px;border:1px solid var(--border);display:grid;place-items:center;flex:none}
+.note .ic svg{width:16px;height:16px}
+.note h5{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em}
+.note p{color:var(--text);font-size:12.5px;margin-top:4px;line-height:1.5}
+.note .meta{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;align-items:center;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em}
+
+/* ---------- modal & toast ---------- */
+.modal-bg{position:fixed;inset:0;background:rgba(15,15,15,0.78);display:grid;place-items:center;z-index:50;padding:20px}
+.modal{
+  background:var(--surface);
+  border:2px solid var(--border);
+  width:100%;
+  max-width:520px;
+  max-height:92vh;
+  overflow:auto;
+  padding:28px 30px;
+  box-shadow:8px 8px 0 var(--border);
+}
+.modal h3{font-family:var(--serif);font-size:38px;font-weight:400;line-height:0.98;letter-spacing:-0.03em}
+.modal .sub{
+  color:var(--muted);
+  margin:8px 0 20px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.07em;
+  border-left:1.5px solid var(--border);
+  padding-left:10px;
+}
+.avail{
+  border:1.5px solid var(--border);
+  padding:11px 14px;
+  font-size:11.5px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  margin-bottom:14px;
+}
+.avail.ok{background:var(--ok-soft);color:var(--text)}
+.avail.no{background:var(--bad-soft);color:var(--bad);border-color:var(--bad)}
+.avail.idle{background:var(--bg);color:var(--muted)}
+.slots{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.slot{font-size:11px;font-family:'JetBrains Mono',monospace;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:3px 8px;font-weight:600}
+#toasts{position:fixed;right:22px;bottom:22px;display:flex;flex-direction:column;gap:10px;z-index:100}
+.toast{
+  background:var(--inv-bg);
+  color:var(--inv-text);
+  padding:13px 18px;
+  border:2px solid var(--border);
+  font-weight:700;
+  font-size:11.5px;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  max-width:400px;
+}
+.toast.err{background:var(--bad);color:#fff;border-color:#fff}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+.toolbar .inp{width:auto;min-width:160px}
+.tabs{display:inline-flex;background:var(--bg);border:1.5px solid var(--border);margin-bottom:18px}
+.tabs button{
+  border:0;
+  border-right:1px solid var(--border);
+  background:none;
+  padding:8px 16px;
+  cursor:pointer;
+  font-weight:700;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.07em;
+  color:var(--muted);
+}
+.tabs button:last-child{border-right:0}
+.tabs button.on{background:var(--inv-bg);color:var(--inv-text)}
+.skeleton{background:var(--surface-2);height:18px;border:1px solid var(--rule)}
+details.json pre{background:var(--bg);border:1px solid var(--border);padding:10px;overflow:auto;font-size:11px;margin-top:8px;max-height:200px}
+summary{cursor:pointer;color:var(--text);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;text-decoration:underline}
+
+.editorial-footer{
+  margin-top:44px;
+  padding-top:16px;
+  border-top:1px solid var(--rule);
+  display:flex;
+  justify-content:space-between;
+  font-size:10px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+@media(max-width:1100px){.g4{grid-template-columns:repeat(2,1fr)}.g-21,.g-12,.g3{grid-template-columns:1fr}}
+@media(max-width:860px){
+  #login{grid-template-columns:1fr}.login-hero{display:none}
+  #app{grid-template-columns:1fr}
+  aside{position:fixed;left:0;top:0;z-index:40;transform:translateX(-100%);transition:.25s;width:265px}
+  aside.open{transform:none}
+  main{padding:20px 16px 50px}.g2,.g4{grid-template-columns:1fr}.row2{grid-template-columns:1fr}
+  .menu-btn{display:grid!important}
+}
+.menu-btn{display:none}
+</style>
+</head>
+<body>
+
+<!-- ===================== LOGIN ===================== -->
+<section id="login" class="hidden">
+  <div class="login-hero">
+    <div class="login-kicker">Our <em>Theme</em></div>
+    <div>
+      <h1 class="hero-title">Campus <em>Resource</em> Orchestration</h1>
+      <div class="hero-manifesto">
+        <p>Campus rooms, laboratories, and shared instruments are constantly reserved and circulated, yet conflicting requests and downstream failures corrupt schedules.</p>
+        <p>Our platform decouples synchronous ACID conflict exclusion from asynchronous event streaming, OLAP analytics, and dead-letter recovery — without a single double-booking.</p>
+      </div>
+      <div class="hero-equation">request → <em>outbox</em> → stream → <em>insight</em></div>
+    </div>
+    <div class="hero-foot">
+      <div>
+        <div>DATA ENGINEERING PROJECT</div>
+        <div>PRESENTATION — GROUP 11 (ANKIT · SNEHIL · PRIYANSU)</div>
+      </div>
+      <div class="hero-tags"><span>Transactional Outbox</span><span>Avro + Kafka</span><span>DuckDB OLAP</span><span>Redis KV</span><span>DLQ Replay</span></div>
+    </div>
+  </div>
+  <div class="login-form-wrap">
+    <div class="login-card">
+      <h2>Sign <em>in</em></h2>
+      <p class="sub">Select a role persona below or enter credentials manually.</p>
+      <div class="demo-grid" id="demoGrid"></div>
+      <div class="field"><label class="f">Username</label><input class="inp" id="lu" autocomplete="username"></div>
+      <div class="field"><label class="f">Password</label><input class="inp" id="lp" type="password" autocomplete="current-password"></div>
+      <button class="btn primary block" id="loginBtn">Authenticate →</button>
+      <p style="text-align:center;margin-top:16px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:0.06em">Just browsing? <a href="#" id="guestLink" style="color:var(--text);font-weight:700;text-decoration:underline">Continue as guest</a> (read-only)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== APP ===================== -->
+<div id="app" class="hidden">
+  <aside id="side">
+    <div class="logo">
+      <span class="serif-brand">The Resource <em>Ledger</em></span>
+      <span class="sub-brand">Orchestration Platform · Grp 11</span>
+    </div>
+    <nav id="nav"></nav>
+    <div class="side-foot">
+      <div class="avatar" id="avatar">?</div>
+      <div><b id="uName">—</b><small id="uRole">—</small></div>
+      <button id="logoutBtn" title="Sign out"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
+    </div>
+  </aside>
+  <main>
+    <div class="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn">☰</button>
+      <div><h1 id="pageTitle">Dashboard</h1><p id="pageSub"></p></div>
+      <div class="sp"></div>
+      <span class="pill" id="healthPill"><span class="dot"></span><span>Checking…</span></span>
+      <button class="icon-btn" id="themeBtn" title="Toggle light / dark slide theme">◐</button>
+    </div>
+    <div id="view"></div>
+    <div class="editorial-footer">
+      <div>CAMPUS RESOURCE ORCHESTRATION PLATFORM — GROUP 11</div>
+      <div>SYNCHRONOUS ACID CORE → ASYNCHRONOUS EVENT FAN-OUT</div>
+    </div>
+  </main>
+</div>
+<div id="toasts"></div>
+
+<script>
+/* ================================================================
+   Helpers
+================================================================ */
+const $ = (s, r=document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const I = {
+  grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="0"/><rect x="14" y="3" width="7" height="7" rx="0"/><rect x="3" y="14" width="7" height="7" rx="0"/><rect x="14" y="14" width="7" height="7" rx="0"/></svg>',
+  building:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M9 13h1M9 17h1M14 9h1M14 13h1M14 17h1"/></svg>',
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="0"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+  wrench:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>',
+  bell:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>',
+  chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M7 14l4-4 4 4 5-6"/></svg>',
+  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  users:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  zap:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
+  db:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+  inbox:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>',
+  arrow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+  check:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  x:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+};
+const TYPE_STYLE = {
+  'Classroom':['var(--bg)','building'],
+  'Department Room':['var(--bg)','building'],
+  'Laboratory':['var(--bg)','zap'],
+  'Conference Room':['var(--bg)','users'],
+  'Equipment':['var(--bg)','db'],
+};
+const DEMOS = [
+  ['student1','student123','Student','Computer Science'],
+  ['faculty1','faculty123','Faculty','Electrical Eng.'],
+  ['admin_facility','facility123','Facility Admin','Facilities'],
+  ['admin_sys','sysadmin123','System Admin','IT Services'],
+];
+const ADMIN = ['facility_admin','system_admin'];
+
+const state = { token: localStorage.getItem('co_token'), user: JSON.parse(localStorage.getItem('co_user') || 'null'), guest:false, resources:[], route:'dashboard', timer:null };
+const resName = id => (state.resources.find(r => r.id === id) || {}).name || id;
+
+async function api(path, opts = {}) {
+  const headers = { 'Content-Type':'application/json', ...(opts.headers||{}) };
+  if (state.token) headers.Authorization = 'Bearer ' + state.token;
+  const res = await fetch(path, { ...opts, headers, body: opts.body ? JSON.stringify(opts.body) : undefined });
+  let data = null; try { data = await res.json(); } catch(_){}
+  if (!res.ok) {
+    if (res.status === 401 && state.token) { logout(true); }
+    let msg = data && data.detail;
+    if (Array.isArray(msg)) msg = msg.map(m => m.msg).join('; ');
+    const e = new Error(msg || `Request failed (${res.status})`); e.status = res.status; throw e;
+  }
+  return data;
+}
+function toast(msg, err=false){
+  const t = document.createElement('div'); t.className = 'toast' + (err?' err':'');
+  t.innerHTML = `<span>${err?I.x:I.check}</span><span>${esc(msg)}</span>`;
+  $('#toasts').appendChild(t); setTimeout(()=>t.remove(), 4200);
+}
+const fmtDT = s => { if(!s) return '—'; const d = new Date(s); return isNaN(d) ? s : d.toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC'}) + ' UTC'; };
+const fmtAgo = s => { const d = new Date(s); if(isNaN(d)) return s; const m = Math.round((Date.now()-d)/60000); if(m<1) return 'just now'; if(m<60) return m+'m ago'; if(m<1440) return Math.round(m/60)+'h ago'; return Math.round(m/1440)+'d ago'; };
+const tag = (s, extra='') => `<span class="tag s-${esc(s)} ${extra}">${esc(String(s).replace('_',' '))}</span>`;
+const empty = (t, ico=I.inbox) => `<div class="empty">${ico}<div>${esc(t)}</div></div>`;
+const isAdmin = () => state.user && ADMIN.includes(state.user.role);
+const skeletons = n => Array.from({length:n}, () => `<div class="skeleton" style="margin:14px 0"></div>`).join('');
+
+function modal(html){
+  const bg = document.createElement('div'); bg.className = 'modal-bg';
+  bg.innerHTML = `<div class="modal">${html}</div>`;
+  bg.addEventListener('mousedown', e => { if(e.target === bg) bg.remove(); });
+  document.body.appendChild(bg); return bg;
+}
+
+/* ================================================================
+   Auth
+================================================================ */
+function showLogin(){
+  $('#app').classList.add('hidden'); $('#login').classList.remove('hidden');
+  $('#demoGrid').innerHTML = DEMOS.map(d => `<button class="demo" data-u="${d[0]}" data-p="${d[1]}"><b>${d[2]}</b><small>${d[3]}</small></button>`).join('');
+  document.querySelectorAll('.demo').forEach(b => b.onclick = () => { $('#lu').value = b.dataset.u; $('#lp').value = b.dataset.p; doLogin(); });
+}
+async function doLogin(){
+  const btn = $('#loginBtn'); btn.disabled = true; btn.textContent = 'Authenticating…';
+  try {
+    const r = await api('/api/auth/login', { method:'POST', body:{ username:$('#lu').value.trim(), password:$('#lp').value } });
+    state.token = r.access_token; state.user = r.user; state.guest = false;
+    localStorage.setItem('co_token', r.access_token); localStorage.setItem('co_user', JSON.stringify(r.user));
+    boot();
+  } catch(e){ toast(e.message, true); }
+  btn.disabled = false; btn.textContent = 'Authenticate →';
+}
+function logout(expired=false){
+  state.token = null; state.user = null; state.guest = false;
+  localStorage.removeItem('co_token'); localStorage.removeItem('co_user');
+  clearInterval(state.timer);
+  showLogin(); if(expired) toast('Session expired — please sign in again', true);
+}
+$('#loginBtn').onclick = doLogin;
+$('#lp').addEventListener('keydown', e => e.key==='Enter' && doLogin());
+$('#guestLink').onclick = e => { e.preventDefault(); state.guest = true; state.user = {username:'guest', role:'guest', department:'—'}; boot(); };
+$('#logoutBtn').onclick = () => logout();
+$('#menuBtn').onclick = () => $('#side').classList.toggle('open');
+$('#themeBtn').onclick = () => {
+  const d = document.documentElement; const dark = d.dataset.theme === 'dark';
+  d.dataset.theme = dark ? 'light' : 'dark'; localStorage.setItem('co_theme', d.dataset.theme);
+};
+document.documentElement.dataset.theme = localStorage.getItem('co_theme') || 'dark';
+
+/* ================================================================
+   Router
+================================================================ */
+const ROUTES = {
+  dashboard:{ title:'System', titleHtml:'System <em>pulse</em>', sub:'Synchronous ACID core, transactional outbox & streaming fan-out', icon:'grid', render:vDashboard },
+  resources:{ title:'Resources', titleHtml:'Resource <em>catalog</em>', sub:'Discover and reserve campus halls, laboratories & shared instruments', icon:'building', render:vResources },
+  bookings:{ title:'Bookings', titleHtml:'Active <em>reservations</em>', sub:'Committed time-slot intervals — release or inspect anytime', icon:'cal', render:vBookings, auth:true },
+  tickets:{ title:'Service Requests', titleHtml:'Maintenance <em>ledger</em>', sub:'Report facility faults & trigger critical relocation sagas', icon:'wrench', render:vTickets },
+  notifications:{ title:'Notifications', titleHtml:'Event <em>revisitations</em>', sub:'Asynchronous alerts consumed from Kafka & held in Redis KV with TTL', icon:'bell', render:vNotifications },
+  analytics:{ title:'Analytics', titleHtml:'What we <em>found</em>', sub:'Columnar OLAP aggregations & historical utilization in DuckDB', icon:'chart', render:vAnalytics },
+  admin:{ title:'Admin Console', titleHtml:'Categorisation <em>&amp; control</em>', sub:'Immutable audit trail, dead-letter queue replay & chaos injection', icon:'shield', render:vAdmin, admin:true },
+};
+function buildNav(){
+  const items = Object.entries(ROUTES).filter(([k,r]) => !(r.admin && !isAdmin()) && !(r.auth && state.guest));
+  let html = '<div class="sec">Workspace</div>';
+  items.forEach(([k,r]) => {
+    if(k==='analytics') html += '<div class="sec">Empirical Insights</div>';
+    if(k==='admin') html += '<div class="sec">Governance</div>';
+    html += `<a data-r="${k}" class="${state.route===k?'active':''}">${I[r.icon]}<span>${r.title}</span></a>`;
+  });
+  $('#nav').innerHTML = html;
+  $('#nav').querySelectorAll('a').forEach(a => a.onclick = () => { location.hash = a.dataset.r; $('#side').classList.remove('open'); });
+}
+async function route(){
+  let k = (location.hash || '#dashboard').slice(1);
+  if(!ROUTES[k] || (ROUTES[k].admin && !isAdmin()) || (ROUTES[k].auth && state.guest)) k = 'dashboard';
+  state.route = k; const r = ROUTES[k];
+  $('#pageTitle').innerHTML = r.titleHtml || esc(r.title); $('#pageSub').textContent = r.sub;
+  buildNav(); clearInterval(state.timer);
+  $('#view').innerHTML = `<div class="card">${skeletons(5)}</div>`;
+  try { await r.render(); } catch(e){ $('#view').innerHTML = `<div class="card">${empty('Could not load: '+e.message)}</div>`; }
+}
+window.addEventListener('hashchange', route);
+
+async function pollHealth(){
+  try {
+    const h = await api('/health');
+    const ok = h.system_status === 'OPERATIONAL';
+    $('#healthPill').innerHTML = `<span class="dot ${ok?'':'bad'}"></span><span>${ok?'All systems operational':h.system_status}</span>`;
+    return h;
+  } catch(e){
+    $('#healthPill').innerHTML = `<span class="dot bad"></span><span>API unreachable</span>`;
+  }
+}
+
+async function boot(){
+  $('#login').classList.add('hidden'); $('#app').classList.remove('hidden');
+  const u = state.user;
+  $('#uName').textContent = u.username; $('#uRole').textContent = (u.role||'').replace('_',' ');
+  $('#avatar').textContent = (u.username||'?')[0].toUpperCase();
+  try { state.resources = await api('/api/resources'); } catch(e){}
+  pollHealth(); setInterval(pollHealth, 15000);
+  route();
+}
+
+/* ================================================================
+   Chart helpers
+================================================================ */
+function barList(rows, labelKey, valKey, fmt = v => v, max){
+  max = max || Math.max(1, ...rows.map(r => r[valKey]));
+  return `<div class="bars">` + rows.map(r => `
+    <div class="bar-row"><div class="top"><span>${esc(r[labelKey])}</span><span>${fmt(r[valKey], r)}</span></div>
+    <div class="track"><div class="fill" data-w="${Math.max(2,(r[valKey]/max)*100)}"></div></div></div>`).join('') + `</div>`;
+}
+function columns(rows, xKey, yKey){
+  const max = Math.max(1, ...rows.map(r => r[yKey]));
+  return `<div class="cols">` + rows.map(r => `<div class="col"><span class="v">${r[yKey]}</span><div class="b" data-h="${Math.max(4,(r[yKey]/max)*100)}" title="${esc(r[xKey])}: ${r[yKey]}"></div><span class="x">${esc(String(r[xKey]).slice(0,5))}</span></div>`).join('') + `</div>`;
+}
+function donut(rows, labelKey, valKey){
+  const colors = ['var(--text)','var(--muted)','#7a7a74','#a6a6a0','#454542','#c2c2bc'];
+  const total = rows.reduce((a,r)=>a+r[valKey],0) || 1; let acc = 0; const R = 54, C = 2*Math.PI*R;
+  const segs = rows.map((r,i) => { const len = (r[valKey]/total)*C; const s = `<circle r="${R}" cx="70" cy="70" fill="none" stroke="${colors[i%colors.length]}" stroke-width="18" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-acc}" transform="rotate(-90 70 70)"/>`; acc += len; return s; }).join('');
+  return `<div class="donut-wrap"><svg width="140" height="140" viewBox="0 0 140 140"><circle r="${R}" cx="70" cy="70" fill="none" stroke="var(--surface-2)" stroke-width="18"/>${segs}<text x="70" y="70" text-anchor="middle" font-family="Instrument Serif, serif" font-size="34" fill="var(--text)">${total===1&&!rows.length?0:total}</text><text x="70" y="88" text-anchor="middle" font-size="9" letter-spacing="1.5" fill="var(--muted)">TOTAL</text></svg>
+  <div class="legend">${rows.map((r,i)=>`<div><i style="background:${colors[i%colors.length]}"></i>${esc(r[labelKey])}<b>${r[valKey]}</b></div>`).join('')}</div></div>`;
+}
+function ring(pct, label, color='var(--text)'){
+  const R=44, C=2*Math.PI*R, off = C*(1-Math.min(100,pct)/100);
+  return `<svg width="120" height="120" viewBox="0 0 120 120"><circle r="${R}" cx="60" cy="60" fill="none" stroke="var(--surface-2)" stroke-width="10"/><circle r="${R}" cx="60" cy="60" fill="none" stroke="${color}" stroke-width="10" stroke-dasharray="${C}" stroke-dashoffset="${off}" transform="rotate(-90 60 60)"/><text x="60" y="64" text-anchor="middle" font-family="Instrument Serif, serif" font-size="28" fill="var(--text)">${pct}%</text><text x="60" y="81" text-anchor="middle" font-size="8.5" letter-spacing="1.2" fill="var(--muted)">${label}</text></svg>`;
+}
+function animateCharts(){
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.querySelectorAll('.fill[data-w]').forEach(e => e.style.width = e.dataset.w + '%');
+    document.querySelectorAll('.b[data-h]').forEach(e => e.style.height = e.dataset.h + '%');
+  }));
+}
+
+/* ================================================================
+   Views
+================================================================ */
+async function vDashboard(){
+  const render = async () => {
+    const [h, util, peak, canc, sr] = await Promise.all([
+      api('/health'), api('/api/analytics/utilization'), api('/api/analytics/peak-hours'),
+      api('/api/analytics/cancellations'), api('/api/analytics/service-requests').catch(()=>({total_tickets:0}))
+    ]);
+    const pm = h.pipeline_metrics, lm = h.latency_metrics;
+    const topics = pm.kafka_topics || {};
+    const tmsg = Object.fromEntries(Object.entries(topics).map(([t,v]) => [t, v.total_messages]));
+    const sumTopics = Object.values(tmsg).reduce((a,b)=>a+b,0);
+    const kpi = (lbl, val, sub, ico, cls, unit='') => `<div class="card kpi"><div class="lbl"><span>${lbl}</span><span class="ico ${cls}">${I[ico]}</span></div><div class="val">${val}<small>${unit}</small></div><div class="sub">${sub}</div></div>`;
+    const upm = Math.floor(h.uptime_seconds/60);
+    $('#view').innerHTML = `
+    <div class="grid g4">
+      ${kpi('01 / Availability', h.availability_pct, h.nfr2_compliant?'✓ Meets 99.5% target (NFR 2)':'⚠ Below 99.5% target','shield', h.nfr2_compliant?'c-ok':'c-bad','%')}
+      ${kpi('02 / P95 Latency', lm.p95_ms, lm.count? (lm.nfr1_compliant?'✓ Under 500ms (NFR 1)':'⚠ Over 500ms') + ` · ${lm.count} reqs`:'No traffic yet','clock', lm.nfr1_compliant!==false?'c-brand':'c-bad','ms')}
+      ${kpi('03 / Bookings Stored', pm.total_bookings_stored, `${canc.net_active_bookings} active · ${canc.cancellation_rate_pct}% cancelled`,'cal','c-info')}
+      ${kpi('04 / Service Tickets', sr.total_tickets||0, `Uptime ${upm>=60?Math.floor(upm/60)+'h '+upm%60+'m':upm+'m'}`,'wrench','c-warn')}
+    </div>
+
+    <div class="card mt"><div class="hd"><h3>Transactional <em>outbox</em> → event <em>pipeline</em> <small>auto-refreshing · 10s</small></h3></div>
+      <div class="pipe">
+        <div class="node"><div class="n">${pm.total_bookings_stored}</div><div class="t">01. ACID Commit</div><div class="d">Booking + Outbox WAL</div></div>
+        <div class="link">${I.arrow}</div>
+        <div class="node"><div class="n" style="color:${pm.outbox_pending_lag?'var(--warn)':'var(--text)'}">${pm.outbox_pending_lag}</div><div class="t">02. Outbox Pending</div><div class="d">Relay polls &amp; serializes</div></div>
+        <div class="link">${I.arrow}</div>
+        <div class="node"><div class="n">${sumTopics}</div><div class="t">03. Kafka Log</div><div class="d">${Object.keys(topics).length} topics · 4 partitions</div></div>
+        <div class="link">${I.arrow}</div>
+        <div class="node"><div class="n">${pm.active_notifications_cached}</div><div class="t">04. Redis KV</div><div class="d">Ephemeral state w/ TTL</div></div>
+        <div class="link">${I.arrow}</div>
+        <div class="node"><div class="n" style="color:${pm.dlq_events_unhandled?'var(--bad)':'inherit'}">${pm.dlq_events_unhandled}</div><div class="t">05. Dead Letters</div><div class="d">Backoff exhausted</div></div>
+      </div>
+    </div>
+
+    <div class="grid g-21 mt">
+      <div class="card"><div class="hd"><h3>Resource <em>utilization</em> <small>% of 50 weekly hours</small></h3></div>
+        ${util.length ? barList(util.slice(0,6).map(u=>({...u, name:resName(u.resource_id)})), 'name','utilization_rate_pct', (v,r)=>`${v}% · ${r.total_hours_booked}h`, 100) : empty('No bookings analysed yet — make a booking to see data.', I.chart)}
+      </div>
+      <div class="card"><div class="hd"><h3>Subsystem <em>health</em></h3></div>
+        <div style="display:flex;flex-direction:column;gap:12px">${Object.entries(h.services).map(([k,v])=>`<div class="svc"><span class="dot ${v.status==='HEALTHY'?'':'bad'}"></span><div><b>${esc(k.replace(/_/g,' '))}</b><small>${esc(Object.entries(v).filter(([a])=>a!=='status').map(([a,b])=>b).join(' · ') || v.status)}</small></div></div>`).join('')}</div>
+      </div>
+    </div>
+    <div class="card mt"><div class="hd"><h3>Peak booking <em>hours</em> <small>start-time distribution (UTC)</small></h3></div>
+      ${peak.length ? columns(peak,'hour','bookings_count') : empty('No data yet', I.chart)}
+    </div>`;
+    animateCharts();
+  };
+  await render();
+  state.timer = setInterval(() => state.route==='dashboard' && render().catch(()=>{}), 10000);
+}
+
+/* ---------- resources ---------- */
+async function vResources(){
+  const types = [...new Set(state.resources.map(r=>r.resource_type))];
+  $('#view').innerHTML = `
+    <div class="toolbar">
+      <select class="inp" id="fType"><option value="">All types</option>${types.map(t=>`<option>${esc(t)}</option>`).join('')}</select>
+      <select class="inp" id="fBuild"><option value="">All buildings</option>${[...new Set(state.resources.map(r=>r.building))].map(t=>`<option>${esc(t)}</option>`).join('')}</select>
+      <input class="inp" id="fCap" type="number" min="1" placeholder="Min capacity">
+      <span style="flex:1"></span>
+      <span class="mono" style="color:var(--muted);text-transform:uppercase" id="resCount"></span>
+    </div>
+    <div class="res-grid" id="resGrid"></div>`;
+  const load = async () => {
+    const q = new URLSearchParams(); 
+    if($('#fType').value) q.set('resource_type',$('#fType').value);
+    if($('#fBuild').value) q.set('building',$('#fBuild').value);
+    if($('#fCap').value) q.set('min_capacity',$('#fCap').value);
+    const rs = await api('/api/resources?'+q);
+    $('#resCount').textContent = rs.length + ' SPECIMEN' + (rs.length===1?'':'S');
+    $('#resGrid').innerHTML = rs.length ? rs.map((r,idx)=>resCard(r,idx)).join('') : `<div class="card" style="grid-column:1/-1">${empty('No resources match these filters', I.building)}</div>`;
+    document.querySelectorAll('[data-book]').forEach(b => b.onclick = () => bookModal(rs.find(r=>r.id===b.dataset.book)));
+  };
+  ['fType','fBuild'].forEach(i => $('#'+i).onchange = load); $('#fCap').oninput = load;
+  await load();
+}
+function resCard(r, idx=0){
+  const [bg, ic] = TYPE_STYLE[r.resource_type] || TYPE_STYLE['Classroom'];
+  const attrs = r.attributes && typeof r.attributes === 'object' ? Object.entries(r.attributes) : [];
+  const num = String(idx+1).padStart(2,'0');
+  return `<div class="card res">
+    <div class="banner"><span class="tag">${num} / ${esc(r.resource_type)}</span><span class="big">${I[ic]}</span></div>
+    <div class="body"><h4>${esc(r.name)}</h4><div class="loc">${esc(r.building)} · ${esc(r.room_number||'')}</div>
+      <div>${attrs.slice(0,6).map(([k,v])=>`<span class="chip">${esc(k.replace(/_/g,' '))}${v===true?'':`: <b>${esc(v)}</b>`}</span>`).join('')}</div>
+      <div class="foot"><span class="cap">${I.users} ${r.capacity} ${r.capacity===1?'UNIT':'SEATS MAX'}</span>
+      <button class="btn primary sm" data-book="${esc(r.id)}">Reserve →</button></div></div></div>`;
+}
+function bookModal(r){
+  if(state.guest){ return toast('Please sign in to make a booking', true); }
+  const d = new Date(); d.setDate(d.getDate()+1);
+  const day = d.toISOString().slice(0,10);
+  const m = modal(`
+    <h3>Reserve <em>${esc(r.name)}</em></h3><p class="sub">${esc(r.building)} · ${esc(r.room_number||'')} · Max capacity ${r.capacity} seats</p>
+    <div class="field"><label class="f">Date</label><input class="inp" type="date" id="bDate" value="${day}"></div>
+    <div class="row2"><div class="field"><label class="f">Start (UTC)</label><input class="inp" type="time" id="bStart" value="10:00"></div>
+    <div class="field"><label class="f">End (UTC)</label><input class="inp" type="time" id="bEnd" value="12:00"></div></div>
+    <div id="bSlots"></div><div class="avail idle" id="bAvail">Checking availability…</div>
+    <div class="field"><label class="f">Purpose</label><input class="inp" id="bPurpose" placeholder="e.g. Operating Systems midterm review"></div>
+    <div class="field"><label class="f">Attendees <small style="color:var(--muted);font-weight:500">(max ${r.capacity} seats)</small></label><input class="inp" type="number" id="bAtt" min="1" max="${r.capacity}" value="${Math.min(r.capacity,10)}"><div id="bAttWarn" style="color:var(--bad);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;margin-top:5px;display:none"></div></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn" id="bCancel">Cancel</button>
+      <button class="btn hidden" id="bWaitlist">Join Waitlist</button>
+      <button class="btn primary" id="bGo">Confirm booking →</button>
+    </div>`);
+  const iso = (t) => `${$('#bDate').value}T${t}:00Z`;
+  let slotAvailable = true;
+  const validateCapacity = () => {
+    const att = parseInt($('#bAtt').value, 10);
+    const warnEl = $('#bAttWarn');
+    if (isNaN(att) || att < 1) {
+      warnEl.textContent = 'Attendees count must be at least 1.';
+      warnEl.style.display = 'block';
+      $('#bGo').disabled = true;
+      return false;
+    }
+    if (att > r.capacity) {
+      warnEl.textContent = `Exceeds room capacity! Maximum allowed for ${r.name} is ${r.capacity} seats.`;
+      warnEl.style.display = 'block';
+      $('#bGo').disabled = true;
+      return false;
+    }
+    warnEl.style.display = 'none';
+    $('#bGo').disabled = !slotAvailable;
+    return true;
+  };
+  $('#bAtt').oninput = validateCapacity;
+  const check = async () => {
+    const s = iso($('#bStart').value), e = iso($('#bEnd').value);
+    const box = $('#bAvail'); 
+    if($('#bEnd').value <= $('#bStart').value){ box.className='avail no'; box.textContent='End time must be after start time'; slotAvailable = false; $('#bGo').disabled = true; return; }
+    try {
+      const [a, sched] = await Promise.all([
+        api(`/api/availability?resource_id=${r.id}&start_time=${encodeURIComponent(s)}&end_time=${encodeURIComponent(e)}`),
+        api(`/api/availability/${r.id}/schedule?date=${$('#bDate').value}`)
+      ]);
+      $('#bSlots').innerHTML = sched.length ? `<label class="f">Already booked this day</label><div class="slots">${sched.map(x=>`<span class="slot">${x.start_time.slice(11,16)}–${x.end_time.slice(11,16)}</span>`).join('')}</div>` : '';
+      box.className = 'avail ' + (a.is_available?'ok':'no');
+      box.innerHTML = (a.is_available ? I.check + '<span>Slot is free — no conflicts</span>' : I.x + `<span>${a.conflict_count} conflicting booking${a.conflict_count>1?'s':''} in this window</span>`);
+      slotAvailable = a.is_available;
+      validateCapacity();
+      
+      if (!a.is_available) {
+        $('#bWaitlist').classList.remove('hidden');
+      } else {
+        $('#bWaitlist').classList.add('hidden');
+      }
+
+    } catch(err){ box.className='avail no'; box.textContent = err.message; }
+  };
+  ['bDate','bStart','bEnd'].forEach(i => $('#'+i).onchange = check); check();
+  
+  $('#bCancel').onclick = () => m.remove();
+  
+  $('#bWaitlist').onclick = async () => {
+    const purpose = $('#bPurpose').value.trim(); if(!purpose) return toast('Please add a purpose', true);
+    if(!validateCapacity()) return toast(`Maximum capacity is ${r.capacity} seats`, true);
+    $('#bWaitlist').disabled = true; $('#bWaitlist').textContent = 'Joining...';
+    try {
+      await api('/api/waitlist', { method:'POST', body:{ resource_id:r.id, start_time:iso($('#bStart').value), end_time:iso($('#bEnd').value), purpose, attendees_count:parseInt($('#bAtt').value,10) }});
+      m.remove(); toast(`Added to waitlist for ${r.name}`);
+    } catch(err) {
+      if (err.status === 404) {
+         toast('Waitlist API not yet implemented backend-side (404)', true);
+      } else {
+         toast(err.message, true);
+      }
+      $('#bWaitlist').disabled = false; $('#bWaitlist').textContent = 'Join Waitlist';
+    }
+  };
+
+  $('#bGo').onclick = async () => {
+    const purpose = $('#bPurpose').value.trim(); if(!purpose) return toast('Please add a purpose', true);
+    if(!validateCapacity()) return toast(`Maximum capacity for ${r.name} is ${r.capacity} seats`, true);
+    $('#bGo').disabled = true; $('#bGo').textContent = 'Booking…';
+    try {
+      const ev = await api('/api/bookings', { method:'POST', body:{ resource_id:r.id, start_time:iso($('#bStart').value), end_time:iso($('#bEnd').value), purpose, attendees_count:parseInt($('#bAtt').value,10) }});
+      m.remove(); toast(`Booked! Reference ${ev.booking_id}`);
+    } catch(err){ 
+      $('#bGo').disabled = false; $('#bGo').textContent = 'Confirm booking →'; check(); 
+      
+      let msg = err.message;
+      let alts = [];
+      let altMatch = msg.match(/Smart Alternatives available:\s*(.*?)\./);
+      if (altMatch) {
+          alts = altMatch[1].split(', ');
+          msg = msg.replace(/Smart Alternatives available:.*/, '').trim();
+      }
+      
+      if (alts.length > 0) {
+          let altHtml = alts.map(a => `<button class="btn sm" onclick="document.getElementById('bCancel').click(); setTimeout(()=>document.querySelector('[data-book=\\'${a}\\']').click(), 300)">${a}</button>`).join('');
+          $('#bSlots').innerHTML += `<div class="avail no" style="flex-direction:column; align-items:flex-start"><b>Conflict! Try these alternatives:</b><div style="display:flex;gap:6px;margin-top:8px">${altHtml}</div></div>`;
+          toast('Double-booking conflict', true);
+      } else {
+          toast(msg, true); 
+      }
+    }
+  };
+}
+
+/* ---------- bookings ---------- */
+async function vBookings(){
+  $('#view').innerHTML = `
+    <div class="toolbar"><div class="tabs" id="bkTabs">${[['','All'],['CONFIRMED','Confirmed'],['CANCELLED','Cancelled']].map((t,i)=>`<button data-f="${t[0]}" class="${i?'':'on'}">${t[1]}</button>`).join('')}</div><input type="hidden" id="bkFilter" value=""></div>
+    <div class="card" style="padding:0"><div class="tbl-wrap"><table><thead><tr><th>Resource</th><th>Interval (UTC)</th><th>Purpose</th>${isAdmin()?'<th>Actor</th>':''}<th>Status</th><th>Action</th></tr></thead><tbody id="bkBody"></tbody></table></div></div>`;
+  const load = async () => {
+    const f = $('#bkFilter').value;
+    const rows = await api('/api/bookings' + (f?`?status=${f}`:''));
+    $('#bkBody').innerHTML = rows.length ? rows.map(b => `
+      <tr>
+        <td><b>${esc(resName(b.resource_id))}</b><div class="mono" style="color:var(--muted)">${esc(b.id)}</div></td>
+        <td>${fmtDT(b.start_time)}<div style="color:var(--muted);font-size:11.5px">→ ${fmtDT(b.end_time)}</div></td>
+        <td>${esc(b.purpose||'—')}<div style="color:var(--muted);font-size:11.5px">${b.attendees_count} attendee${b.attendees_count===1?'':'s'}</div></td>
+        ${isAdmin()?`<td><span class="mono">${esc(b.user_id)}</span><div style="color:var(--muted);font-size:11.5px">${esc(b.department)} · ${esc(b.user_role)}</div></td>`:''}
+        <td>${tag(b.status)}</td>
+        <td style="text-align:right">${b.status==='CONFIRMED'?`<button class="btn danger sm" data-cancel="${esc(b.id)}">Cancel</button>`:''}</td>
+      </tr>`).join('') : `<tr><td colspan="6">${empty('No bookings found', I.cal)}</td></tr>`;
+    document.querySelectorAll('[data-cancel]').forEach(btn => btn.onclick = () => cancelModal(btn.dataset.cancel, load));
+  };
+  $('#bkTabs').querySelectorAll('button').forEach(b => b.onclick = () => {
+    $('#bkTabs .on').classList.remove('on'); b.classList.add('on'); $('#bkFilter').value = b.dataset.f; load();
+  });
+  await load();
+}
+function cancelModal(id, done){
+  const m = modal(`<h3>Cancel <em>booking?</em></h3><p class="sub">A <b>BookingCancelled</b> event will be written to the transactional outbox and the slot is released immediately.</p>
+    <div class="field"><label class="f">Reason</label><input class="inp" id="cReason" value="Plans changed"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn" id="cNo">Keep it</button><button class="btn danger" id="cYes">Cancel booking</button></div>`);
+  $('#cNo').onclick = () => m.remove();
+  $('#cYes').onclick = async () => {
+    $('#cYes').disabled = true;
+    try { await api(`/api/bookings/${id}/cancel`, { method:'POST', body:{ reason:$('#cReason').value }}); m.remove(); toast('Booking cancelled'); done(); }
+    catch(e){ toast(e.message, true); $('#cYes').disabled = false; }
+  };
+}
+
+/* ---------- service requests ---------- */
+async function vTickets(){
+  $('#view').innerHTML = `<div class="grid g-12">
+    <div class="card" style="align-self:start"><div class="hd"><h3>Report an <em>issue</em></h3></div>
+      ${state.guest ? empty('Sign in to report an issue', I.wrench) : `
+      <div class="field"><label class="f">Resource</label><select class="inp" id="tRes">${state.resources.map(r=>`<option value="${esc(r.id)}">${esc(r.name)}</option>`).join('')}</select></div>
+      <div class="row2"><div class="field"><label class="f">Issue type</label><select class="inp" id="tType">${['PROJECTOR_FAILURE','HVAC','NETWORK','FURNITURE','ELECTRICAL','CLEANING','OTHER'].map(t=>`<option value="${t}">${t.replace('_',' ')}</option>`).join('')}</select></div>
+      <div class="field"><label class="f">Priority</label><select class="inp" id="tPri"><option>LOW</option><option selected>MEDIUM</option><option>HIGH</option><option>CRITICAL</option></select><small style="color:var(--muted); display:block; margin-top:4px; font-size:10.5px; text-transform:uppercase">CRITICAL triggers the Maintenance Saga</small></div></div>
+      <div class="field"><label class="f">Description</label><textarea class="inp" id="tDesc" placeholder="What's going wrong?"></textarea></div>
+      <button class="btn primary block" id="tGo">Submit ticket →</button>`}
+    </div>
+    <div class="card"><div class="hd"><h3>Recorded <em>tickets</em> <small id="tCount"></small></h3></div><div id="tList"></div></div></div>`;
+  const draw = async () => {
+    const rows = await api('/api/service-requests');
+    $('#tCount').textContent = rows.length + ' TOTAL';
+    $('#tList').innerHTML = rows.length ? `<div class="feed">${rows.map(t=>`<div class="note"><div class="ic ${t.priority==='HIGH'||t.priority==='CRITICAL'?'c-bad':t.priority==='MEDIUM'?'c-warn':'c-ok'}">${I.wrench}</div>
+      <div style="flex:1"><h5>${esc(t.issue_type.replace(/_/g,' '))} — ${esc(resName(t.resource_id))}</h5><p>${esc(t.description||'')}</p>
+      <div class="meta">${tag(t.status)} ${tag(t.priority)} <span class="mono">${esc(t.id)}</span> · ${fmtAgo(t.created_at)}</div></div></div>`).join('')}</div>` : empty('No tickets — all facilities nominal', I.wrench);
+  };
+  if($('#tGo')) $('#tGo').onclick = async () => {
+    const description = $('#tDesc').value.trim(); if(!description) return toast('Please describe the issue', true);
+    try { const ev = await api('/api/service-requests', {method:'POST', body:{resource_id:$('#tRes').value, issue_type:$('#tType').value, description, priority:$('#tPri').value}});
+      toast('Ticket '+ev.ticket_id+' created'); $('#tDesc').value=''; draw(); } catch(e){ toast(e.message, true); }
+  };
+  await draw();
+}
+
+/* ---------- notifications ---------- */
+async function vNotifications(){
+  const draw = async () => {
+    const rows = await api('/api/notifications?limit=50');
+    rows.sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||''));
+    $('#nfList').innerHTML = rows.length ? `<div class="feed">${rows.map(n => {
+      const bad = /Cancel/i.test(n.event_type), tk = /Service/i.test(n.event_type);
+      return `<div class="note"><div class="ic ${bad?'c-bad':tk?'c-warn':'c-ok'}">${bad?I.x:tk?I.wrench:I.check}</div>
+      <div style="flex:1"><h5>${esc(n.subject)}</h5><p>${esc(n.body)}</p>
+      <div class="meta">${tag(n.status)}<span class="chip" style="margin:0">${esc(n.event_type)}</span><span class="chip" style="margin:0">${esc(n.channel)}</span><span class="mono">cid: ${esc(n.correlation_id)}</span><span>${fmtAgo(n.timestamp)}</span></div></div></div>`; }).join('')}</div>` : empty('No notifications yet. Book a resource to trigger the event pipeline.', I.bell);
+  };
+  $('#view').innerHTML = `<div class="toolbar"><button class="btn" id="nfRef">↻ Refresh</button><span style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:0.06em">Delivered by the notification consumer; state held in Redis KV with TTL.</span></div><div class="card" id="nfList"></div>`;
+  $('#nfRef').onclick = draw; await draw();
+}
+
+/* ---------- analytics ---------- */
+async function vAnalytics(){
+  const [util, peak, dept, canc, sr] = await Promise.all([
+    api('/api/analytics/utilization'), api('/api/analytics/peak-hours'), api('/api/analytics/departments'),
+    api('/api/analytics/cancellations'), api('/api/analytics/service-requests')
+  ]);
+  const prio = Object.entries(sr.by_priority||{}).map(([k,v])=>({priority:k, count:v}));
+  $('#view').innerHTML = `
+  <div class="grid g3">
+    <div class="card" style="display:flex;align-items:center;gap:18px">${ring(Math.round(100-canc.cancellation_rate_pct),'RETAINED','var(--text)')}<div><div style="font-family:var(--serif);font-size:28px;line-height:1">Booking <em>retention</em></div><div style="color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:0.05em;margin-top:8px;border-left:1.5px solid var(--border);padding-left:8px">${canc.gross_bookings} gross · ${canc.cancelled_bookings} cancelled · <b style="color:var(--text)">${canc.net_active_bookings}</b> net active</div></div></div>
+    <div class="card kpi"><div class="lbl"><span>Hours Booked (Net)</span><span class="ico c-brand">${I.cal}</span></div><div class="val">${util.reduce((a,u)=>a+u.total_hours_booked,0).toFixed(1)}<small>hrs</small></div><div class="sub">Across ${util.length} active resource${util.length===1?'':'s'}</div></div>
+    <div class="card kpi"><div class="lbl"><span>Service Tickets</span><span class="ico c-warn">${I.wrench}</span></div><div class="val">${sr.total_tickets}</div><div class="sub">${prio.map(p=>p.priority+': '+p.count).join(' · ')||'None recorded'}</div></div>
+  </div>
+  <div class="grid g2 mt">
+    <div class="card"><div class="hd"><h3>1. Resource <em>utilization</em> <small>net of cancellations</small></h3></div>
+      ${util.length?barList(util.map(u=>({...u,name:resName(u.resource_id)})),'name','utilization_rate_pct',(v,r)=>`${v}% · ${r.total_bookings} bkg · ${r.avg_attendees} avg`,100):empty('No data yet',I.chart)}</div>
+    <div class="card"><div class="hd"><h3>2. Department <em>demand</em></h3></div>
+      ${dept.length?donut(dept,'department','total_bookings'):empty('No data yet',I.chart)}</div>
+  </div>
+  <div class="grid g-21 mt">
+    <div class="card"><div class="hd"><h3>3. Peak <em>hours</em> <small>bookings by start hour (UTC)</small></h3></div>${peak.length?columns(peak,'hour','bookings_count'):empty('No data yet',I.chart)}</div>
+    <div class="card"><div class="hd"><h3>4. Attendees <em>by department</em></h3></div>${dept.length?barList(dept,'department','total_attendees',v=>v):empty('No data yet',I.chart)}</div>
+  </div>`;
+  animateCharts();
+}
+
+/* ---------- admin ---------- */
+async function vAdmin(){
+  const sys = state.user.role === 'system_admin';
+  $('#view').innerHTML = `<div class="tabs" id="adTabs">
+    <button data-t="audit" class="on">Audit logs</button>${sys?'<button data-t="dlq">Dead-letter queue</button><button data-t="chaos">Chaos Control</button>':''}<button data-t="catalog">Add resource</button><button data-t="relay">Outbox relay</button></div><div id="adBody"></div>`;
+  const tabs = { audit:tAudit, dlq:tDlq, chaos:tChaos, catalog:tCatalog, relay:tRelay };
+  $('#adTabs').querySelectorAll('button').forEach(b => b.onclick = () => { $('#adTabs .on').classList.remove('on'); b.classList.add('on'); tabs[b.dataset.t](); });
+  tAudit();
+}
+async function tAudit(){
+  $('#adBody').innerHTML = `<div class="toolbar"><input class="inp" id="aCid" placeholder="Correlation ID"><input class="inp" id="aAct" placeholder="Actor ID"><input class="inp" id="aRes" placeholder="Resource ID"><button class="btn primary" id="aGo">Search →</button></div><div class="card" style="padding:0"><div class="tbl-wrap"><table><thead><tr><th>Time</th><th>Action</th><th>Actor</th><th>Resource</th><th>Status</th><th>Correlation</th></tr></thead><tbody id="aBody"></tbody></table></div></div>`;
+  const load = async () => {
+    const q = new URLSearchParams({limit:100});
+    if($('#aCid').value) q.set('correlation_id',$('#aCid').value); if($('#aAct').value) q.set('actor_id',$('#aAct').value); if($('#aRes').value) q.set('resource_id',$('#aRes').value);
+    const rows = await api('/api/analytics/audit-logs?'+q);
+    $('#aBody').innerHTML = rows.length ? rows.map(a=>`<tr><td style="white-space:nowrap">${fmtAgo(a.timestamp)}<div class="mono" style="color:var(--muted)">${esc((a.timestamp||'').slice(11,19))}</div></td>
+      <td><b>${esc(a.action.replace(/_/g,' '))}</b><details class="json"><summary>details</summary><pre>${esc(JSON.stringify(a.details,null,2))}</pre></details></td>
+      <td>${esc(a.actor_id)}<div style="color:var(--muted);font-size:11px;text-transform:uppercase">${esc(a.actor_role)}</div></td><td class="mono">${esc(a.resource_id)}</td><td>${tag(a.status)}</td><td class="mono">${esc(a.correlation_id)}</td></tr>`).join('') : `<tr><td colspan="6">${empty('No audit entries match',I.shield)}</td></tr>`;
+  };
+  $('#aGo').onclick = load; await load();
+}
+async function tDlq(){
+  const rows = await api('/api/dlq');
+  $('#adBody').innerHTML = `<div class="card">${rows.length ? `<div class="feed">${rows.map(d=>`<div class="note"><div class="ic c-bad">${I.x}</div><div style="flex:1"><h5>${esc(d.error_message)}</h5><p>${esc(d.original_topic)} · group ${esc(d.consumer_group)} · ${d.retry_count} retries</p>
+      <div class="meta"><span class="mono">${esc(d.dlq_id)}</span><span class="mono">cid: ${esc(d.correlation_id)}</span><span>${fmtAgo(d.failed_at)}</span></div>
+      <details class="json"><summary>payload &amp; stack trace</summary><pre>${esc(d.payload_json)}\n\n${esc(d.stack_trace)}</pre></details></div>
+      <button class="btn sm" data-replay="${esc(d.dlq_id)}">↻ Replay</button></div>`).join('')}</div>` : empty('Dead-letter queue is empty — all events processed', I.shield)}</div>`;
+  document.querySelectorAll('[data-replay]').forEach(b => b.onclick = async () => { try { await api(`/api/dlq/${b.dataset.replay}/replay`, {method:'POST'}); toast('Event replayed to original topic'); tDlq(); } catch(e){ toast(e.message,true);} });
+}
+function tChaos() {
+  $('#adBody').innerHTML = `<div class="card" style="max-width:640px"><div class="hd"><h3>Chaos <em>engineering</em></h3></div>
+  <p style="color:var(--muted);margin-bottom:18px;border-left:1.5px solid var(--border);padding-left:10px;text-transform:uppercase;font-size:11px;letter-spacing:0.05em">Inject failures into downstream consumers to test exponential backoff retries and the Dead-Letter Queue (DLQ).</p>
+  
+  <div class="avail idle" style="display:flex; justify-content:space-between; align-items:center;">
+    <div><b>Notification Consumer</b><br><small style="color:var(--muted)">Simulate a consumer crash when processing notifications</small></div>
+    <div style="display:flex;gap:10px;">
+        <button class="btn danger sm" id="cNotifFail">Force Fail</button>
+        <button class="btn sm" id="cNotifRecover">Recover</button>
+    </div>
+  </div>
+  
+  </div>`;
+  
+  $('#cNotifFail').onclick = async () => {
+      try { await api('/api/chaos/inject?target=fail_notifications&fail=true', {method:'POST'}); toast('Notifications will now fail', true); }
+      catch(e) { toast(e.message, true); }
+  };
+  $('#cNotifRecover').onclick = async () => {
+      try { await api('/api/chaos/inject?target=fail_notifications&fail=false', {method:'POST'}); toast('Notifications recovered'); }
+      catch(e) { toast(e.message, true); }
+  };
+}
+function tCatalog(){
+  $('#adBody').innerHTML = `<div class="card" style="max-width:640px"><div class="hd"><h3>Add campus <em>resource</em></h3></div>
+    <div class="field"><label class="f">Name</label><input class="inp" id="cName" placeholder="Alan Turing Lecture Hall B"></div>
+    <div class="row2"><div class="field"><label class="f">Type</label><select class="inp" id="cType"><option>Classroom</option><option>Department Room</option><option>Conference Room</option><option>Laboratory</option><option>Equipment</option></select></div>
+    <div class="field"><label class="f">Capacity</label><input class="inp" id="cCap" type="number" min="1" value="50"></div></div>
+    <div class="row2"><div class="field"><label class="f">Building</label><input class="inp" id="cBld" placeholder="Computing Complex"></div><div class="field"><label class="f">Room number</label><input class="inp" id="cRoom" placeholder="CC-201"></div></div>
+    <div class="field"><label class="f">Attributes (JSON, optional)</label><textarea class="inp mono" id="cAttr">{"smart_board": true, "microphones": 4}</textarea></div>
+    <button class="btn primary" id="cGo">Create resource →</button></div>`;
+  $('#cGo').onclick = async () => {
+    let attributes = {}; try { attributes = JSON.parse($('#cAttr').value || '{}'); } catch(e){ return toast('Attributes must be valid JSON', true); }
+    try { const r = await api('/api/resources', {method:'POST', body:{name:$('#cName').value, resource_type:$('#cType').value, building:$('#cBld').value, room_number:$('#cRoom').value, capacity:+$('#cCap').value, attributes}});
+      toast(`Created ${r.name}`); state.resources = await api('/api/resources'); } catch(e){ toast(e.message, true); }
+  };
+}
+function tRelay(){
+  $('#adBody').innerHTML = `<div class="card" style="max-width:640px"><div class="hd"><h3>Outbox <em>relay</em></h3></div><p style="color:var(--muted);margin-bottom:18px;border-left:1.5px solid var(--border);padding-left:10px;text-transform:uppercase;font-size:11px;letter-spacing:0.05em">The relay daemon polls pending outbox rows, serialises them with Avro and publishes to Kafka. Use this control to force an immediate flush.</p><button class="btn primary" id="rGo">${I.zap.replace('<svg','<svg width="16" height="16"')} Flush outbox now →</button><div id="rOut" style="margin-top:14px"></div></div>`;
+  $('#rGo').onclick = async () => { try { const r = await api('/api/relay/flush', {method:'POST'}); $('#rOut').innerHTML = `<div class="avail ok">${I.check}<span>${r.processed_outbox_events} event(s) published</span></div>`; } catch(e){ toast(e.message, true); } };
+}
+
+/* ================================================================
+   Start
+================================================================ */
+(async function init(){
+  if(state.token && state.user){ 
+    try { await api('/api/auth/me'); boot(); } catch(e){ showLogin(); }
+  } else showLogin();
+})();
+</script>
+</body>
+</html>
